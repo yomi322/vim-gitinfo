@@ -11,6 +11,18 @@ function! s:system(...)
   return s:has_vimproc() ? call('vimproc#system', a:000) : call('system', a:000)
 endfunction
 
+function! s:has_vimproc()
+  if !exists('s:vimproc_loaded')
+    try
+      call vimproc#version()
+      let s:vimproc_loaded = 1
+    catch
+      let s:vimproc_loaded = 0
+    endtry
+  endif
+  return s:vimproc_loaded
+endfunction
+
 
 let &cpo = s:save_cpo
 unlet s:save_cpo
