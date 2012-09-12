@@ -11,6 +11,10 @@ function! s:system(...)
   return s:has_vimproc() ? call('vimproc#system', a:000) : call('system', a:000)
 endfunction
 
+function! s:shell_error()
+  return s:has_vimproc() ? vimproc#get_last_status() : v:shell_error
+endfunction
+
 function! s:has_vimproc()
   if !exists('s:vimproc_loaded')
     try
