@@ -18,6 +18,12 @@ function! gitinfo#unstaged()
   return s:is_inside() ? (exit != 0) : 0
 endfunction
 
+function! gitinfo#staged()
+  call s:system('git diff-index --cached --quiet --ignore-submodules HEAD')
+  let exit = s:shell_error()
+  return s:is_inside() ? (exit && exit != 128) : 0
+endfunction
+
 
 function! s:get_gitdir()
   let gitdir = s:system('git rev-parse --git-dir')
