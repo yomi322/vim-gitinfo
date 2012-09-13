@@ -39,6 +39,35 @@ function! s:get_branch(gitdir)
   return matchstr(ref, 'refs/heads/\zs\S\+\ze')
 endfunction
 
+function! s:get_action(gitdir)
+  let dirs1 = filter(map(['/rebase-apply', '/rebase', '/../.dotest'], 'a:gitdir . v:val'), 'isdirectory(v:val)')
+  let dirs2 = filter(map(['/rebase-merge', '/.dotest-merge'],         'a:gitdir . v:val'), 'isdirectory(v:val)')
+  if !empty(dirs1)
+    let dir = dirs1[0]
+    if filereadable(dir . '/rebasing')
+      let action = 'rebase'
+    elseif filereadable(dir . '/applying')
+      let action = 'am'
+    else
+      let action = 'am/rebase'
+    endif
+  elseif !empty(dirs2)
+    let dir = dirs2[0]
+    if filereadable(dir . '/interactive')
+      let action = 'rebase-i'
+    else
+      let action = 'rebase-m'
+    endif
+  elseif filereadable(a:gitdir . '/MERGE_HEAD')
+    let action = 'merge'
+  elseif filereadable(a:gitdir . '/BISECT_LOG')
+    let action = 'bisect'
+  else
+    let action = ''
+  endif
+  return action
+endfunction
+
 
 function! s:system(...)
   return s:has_vimproc() ? call('vimproc#system', a:000) : call('system', a:000)
