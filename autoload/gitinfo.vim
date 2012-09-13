@@ -3,13 +3,35 @@ set cpo&vim
 
 
 function! gitinfo#branch()
-  return ''
+  let gitdir = s:get_gitdir()
+  return !empty(gitdir) ? s:get_branch(gitdir) : ''
 endfunction
 
 
 function! s:get_gitdir()
   let gitdir = s:system('git rev-parse --git-dir')
   return s:shell_error() == 0 ? split(gitdir, '\n')[0] : ''
+endfunction
+
+function! s:get_branch(gitdir)
+  let symref = s:system('git symbolic-ref HEAD')
+  let symref = s:shell_error() == 0 ? split(symref, '\n')[0] : ''
+  if filereadable(a:gitdir . '/rebase-apply/head-name')
+    let ref = !empty(symref) ? symref : s:readfirstline(a:gitdir . '/rebase-apply/head-name')
+  elseif filereadable(a:gitdir . '/rebase/head-name')
+    let ref = !empty(symref) ? symref : s:readfirstline(a:gitdir . '/rebase/head-name')
+  elseif filereadable(a:gitdir . '/../.dotest/head-name')
+    let ref = !empty(symref) ? symref : s:readfirstline(a:gitdir . '/../.dotest/head-name')
+  elseif filereadable(a:gitdir . '/MERGE_HEAD')
+    let ref = !empty(symref) ? symref : s:readfirstline(a:gitdir . '/MERGE_HEAD')
+  elseif filereadable(a:gitdir . '/rebase-merge/head-name')
+    let ref = s:readfirstline(a:gitdir . '/rebase-merge/head-name')
+  elseif filereadable(a:gitdir . '/.dotest-merge/head-name')
+    let ref = s:readfirstline(a:gitdir . '/.dotest-merge/head-name')
+  else
+    let ref = !empty(symref) ? symref : s:readfirstline(a:gitdir . '/HEAD')
+  endif
+  return matchstr(ref, 'refs/heads/\zs\S\+\ze')
 endfunction
 
 
@@ -31,6 +53,11 @@ function! s:has_vimproc()
     endtry
   endif
   return s:vimproc_loaded
+endfunction
+
+function! s:readfirstline(fname)
+  let firstline = readfile(a:fname, '', 1)
+  return !empty(firstline) ? firstline[0] : ''
 endfunction
 
 
