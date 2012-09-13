@@ -22,6 +22,12 @@ INTRODUCTION					*gitinfo-introduction*
 |tabline| as VCS_info does in zsh. Functions to get the information are
 provided. If |vimproc| is available, they are asynchronously executed.
 
+Requirements:
+- git (http://git-scm.com/)
+
+Recommendation:
+- vimproc (https://github.com/Shougo/vimproc)
+
 Latest Version:
 https://github.com/yomi322/vim-gitinfo
 
