@@ -7,6 +7,12 @@ function! gitinfo#branch()
 endfunction
 
 
+function! s:get_gitdir()
+  let gitdir = s:system('git rev-parse --git-dir')
+  return s:shell_error() == 0 ? split(gitdir, '\n')[0] : ''
+endfunction
+
+
 function! s:system(...)
   return s:has_vimproc() ? call('vimproc#system', a:000) : call('system', a:000)
 endfunction
