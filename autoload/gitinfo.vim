@@ -24,6 +24,11 @@ function! gitinfo#staged()
   return s:is_inside() ? (exit && exit != 128) : 0
 endfunction
 
+function! gitinfo#revision()
+  let rev = s:system('git rev-parse --quiet --verify HEAD')
+  return s:shell_error() == 0 ? split(rev, '\n')[0] : ''
+endfunction
+
 
 function! s:get_gitdir()
   let gitdir = s:system('git rev-parse --git-dir')
