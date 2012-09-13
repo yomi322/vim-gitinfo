@@ -7,6 +7,11 @@ function! gitinfo#branch()
   return !empty(gitdir) ? s:get_branch(gitdir) : ''
 endfunction
 
+function! gitinfo#action()
+  let gitdir = s:get_gitdir()
+  return !empty(gitdir) ? s:get_action(gitdir) : ''
+endfunction
+
 
 function! s:get_gitdir()
   let gitdir = s:system('git rev-parse --git-dir')
