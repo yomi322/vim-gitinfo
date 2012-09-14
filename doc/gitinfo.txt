@@ -1,7 +1,7 @@
 *gitinfo.txt*	Show git information.
 
 Version: 0.0.1
-Author: yomi322 <yomi322@gmail.com>
+Author: yomi <yomi322@gmail.com>
 License: MIT License
 
 ==============================================================================
@@ -20,13 +20,10 @@ INTRODUCTION					*gitinfo-introduction*
 
 *gitinfo* is a Vim plugin to show git information on |statusline| or
 |tabline| as VCS_info does in zsh. Functions to get the information are
-provided. If |vimproc| is available, they are asynchronously executed.
+provided.
 
 Requirements:
 - git (http://git-scm.com/)
-
-Recommendation:
-- vimproc (https://github.com/Shougo/vimproc)
 
 Latest Version:
 https://github.com/yomi322/vim-gitinfo
