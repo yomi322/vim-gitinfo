@@ -19,7 +19,7 @@ CHANGELOG			|gitinfo-changelog|
 INTRODUCTION					*gitinfo-introduction*
 
 *gitinfo* is a Vim plugin to show git information on |statusline| or
-|tabline| as VCS_info does in zsh. Functions to get the information are
+|tabline| as vcs_info does in zsh. Functions to get the information are
 provided.
 
 Requirements:
