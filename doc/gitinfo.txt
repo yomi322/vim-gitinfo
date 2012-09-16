@@ -40,7 +40,7 @@ USAGE				RESULT	DESCRIPTION
 
 gitinfo#branch()		String	the branch name
 gitinfo#action()		String	the action name
-gitinfo#revision()		String	the hash of the current commit
+gitinfo#revision([{len}])	String	the hash of the current commit
 gitinfo#unstaged([{str}])	String	check if there are unstaged changes
 gitinfo#staged([{str}])		String	check if there are staged changes
 
@@ -58,10 +58,13 @@ gitinfo#action()
 	merge conflict. It returns an empty string in the other cases.
 
 						*gitinfo#revision()*
-gitinfo#revision()
+gitinfo#revision([{len}])
 	The result is a string describing the hash value of the currently
 	checked out commit. If the current working directory is not
 	git-controlled, an empty string is returned.
+
+	When {len}, which is a Number, is given, the return value is
+	truncated to the given number of characters.
 
 						*gitinfo#unstaged()*
 gitinfo#unstaged([{str}])
