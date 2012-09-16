@@ -54,8 +54,8 @@ gitinfo#branch()
 						*gitinfo#action()*
 gitinfo#action()
 	The result is a string corresponding to the action (e.g. merge,
-	rebase) in case there is an action. It returns an empty string in the
-	other case.
+	rebase) in case there is an action like an interactive rebase or a
+	merge conflict. It returns an empty string in the other cases.
 
 						*gitinfo#revision()*
 gitinfo#revision()
