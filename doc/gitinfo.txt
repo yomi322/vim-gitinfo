@@ -41,10 +41,8 @@ USAGE				RESULT	DESCRIPTION
 gitinfo#branch()		String	the branch name
 gitinfo#action()		String	the action name
 gitinfo#revision()		String	the hash of the current commit
-gitinfo#unstaged({exp1} [, {exp2}])
-				String	check if there are unstaged changes
-gitinfo#staged({exp1} [, {exp2}])
-				String	check if there are staged changes
+gitinfo#unstaged([{str}])	String	check if there are unstaged changes
+gitinfo#staged([{str}])		String	check if there are staged changes
 
 
 						*gitinfo#branch()*
@@ -66,17 +64,19 @@ gitinfo#revision()
 	git-controlled, an empty string is returned.
 
 						*gitinfo#unstaged()*
-gitinfo#unstaged({exp1} [, {exp2}])
-	The result is a string of {exp1}, if there are unstaged changes.
-	Otherwise a string of {exp2} is returned. When {exp2} is not given,
-	an empty string is used instead.
-	Changes in untracked files are ignored.
+gitinfo#unstaged([{str}])
+	The result is a string of {str}, if there are unstaged changes.
+	Otherwise an empty string is returned. Changes in untracked files
+	are ignored.
+
+	When {str} is omitted, the default value 'U' is used instead.
 
 						*gitinfo#staged()*
-gitinfo#staged({exp1} [, {exp2}])
-	The result is a string of {exp1}, if there are staged changes.
-	Otherwise a string of {exp2} is returned. When {exp2} is not given,
-	an empty string is used instead.
+gitinfo#staged([{str}])
+	The result is a string of {str}, if there are staged changes.
+	Otherwise an empty string is returned.
+
+	When {str} is omitted, the default value 'S' is used instead.
 
 
 
