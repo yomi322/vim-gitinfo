@@ -38,12 +38,39 @@ FUNCTIONS					*gitinfo-functions*
 
 USAGE				RESULT	DESCRIPTION
 
+gitinfo#format([{fmt1}, {fmt2}])
+				String	show git info accoding to the format
 gitinfo#branch()		String	the branch name
 gitinfo#action()		String	the action name
 gitinfo#revision([{len}])	String	the hash of the current commit
 gitinfo#unstaged([{str}])	String	check if there are unstaged changes
 gitinfo#staged([{str}])		String	check if there are staged changes
 
+
+						*gitinfo#format()*
+gitinfo#format([{fmt1}, {fmt2}])
+	The result is the output of git information accoding to the given
+	format. {fmt1} is used when there is no action (which is more often),
+	and {fmt2} when an action is going on; like an interacting rebase or
+	a merge conflict. When the arguments are omitted, the default values
+	are used instead.
+
+	If the current directory is not controlled by git, an empty string is
+	returned.
+
+	The following replacements are done in the format string. See the
+	section of each of the functions for more detail.
+
+	%b	gitinfo#branch()
+	%a	gitinfo#action()
+	%i	gitinfo#revision(7)
+	%u	gitinfo#unstaged()
+	%c	gitinfo#staged()
+
+	The default values are shown below.
+
+	fmt1	'[%b]-(%i)'
+	fmt2	'[%b|%a]-(%i)'
 
 						*gitinfo#branch()*
 gitinfo#branch()
