@@ -121,7 +121,9 @@ ISSUES						*gitinfo-issues*
 CHANGELOG					*gitinfo-changelog*
 
 x.x.x	xxxx-xx-xx
-	  - The behavior of gitinfo#unstaged() and gitinfo#staged() changed.
+	  - Change the behavior of gitinfo#unstaged() and gitinfo#staged()
+	  - Modify gitinfo#revision() to accept the argument
+	  - Add gitinfo#format()
 
 0.0.1	2012-09-13
 	  - Initial version.
