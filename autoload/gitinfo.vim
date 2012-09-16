@@ -12,18 +12,6 @@ function! gitinfo#action()
   return !empty(gitdir) ? s:get_action(gitdir) : ''
 endfunction
 
-function! gitinfo#unstaged()
-  call s:system('git diff --no-ext-diff --ignore-submodules --quiet --exit-code')
-  let exit = s:shell_error()
-  return s:is_inside() ? (exit != 0) : 0
-endfunction
-
-function! gitinfo#staged()
-  call s:system('git diff-index --cached --quiet --ignore-submodules HEAD')
-  let exit = s:shell_error()
-  return s:is_inside() ? (exit && exit != 128) : 0
-endfunction
-
 function! gitinfo#revision()
   let rev = s:system('git rev-parse --quiet --verify HEAD')
   return s:shell_error() == 0 ? split(rev, '\n')[0] : ''
