@@ -40,8 +40,6 @@ USAGE				RESULT	DESCRIPTION
 
 gitinfo#branch()		String	the branch name
 gitinfo#action()		String	the action name
-gitinfo#unstaged()		Number	TRUE if there are unstaged changes
-gitinfo#staged()		Number	TRUE if there are staged changes
 gitinfo#revision()		String	the hash of the current commit
 
 
@@ -56,16 +54,6 @@ gitinfo#action()
 	The result is a string corresponding to the action (e.g. merge,
 	rebase) in case there is an action. It returns an empty string in the
 	other case.
-
-						*gitinfo#unstaged()*
-gitinfo#unstaged()
-	The result is a number, which is non-zero if there are unstaged
-	changes. Changes in untracked files are ignored.
-
-						*gitinfo#staged()*
-gitinfo#staged()
-	The result is a number, which is non-zero if there are staged
-	changes.
 
 						*gitinfo#revision()*
 gitinfo#revision()
