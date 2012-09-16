@@ -17,18 +17,11 @@ function! gitinfo#revision()
   return s:shell_error() == 0 ? split(rev, '\n')[0] : ''
 endfunction
 
-function! gitinfo#unstaged(str, ...)
+function! gitinfo#unstaged(...)
   call s:system('git diff --no-ext-diff --ignore-submodules --quiet --exit-code')
   let exit = s:shell_error()
   let changed = s:is_inside() ? (exit != 0) : 0
-  return changed ? a:str : a:0 ? a:1 : ''
-endfunction
-
-function! gitinfo#staged(str, ...)
-  call s:system('git diff-index --cached --quiet --ignore-submodules HEAD')
-  let exit = s:shell_error()
-  let changed = s:is_inside() ? (exit && exit != 128) : 0
-  return changed ? a:str : a:0 ? a:1 : ''
+  return changed ? (a:0 ? a:1 : 'U') : ''
 endfunction
 
 
