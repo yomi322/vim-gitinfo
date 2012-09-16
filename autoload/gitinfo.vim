@@ -2,6 +2,44 @@ let s:save_cpo = &cpo
 set cpo&vim
 
 
+function! gitinfo#format(...)
+  let gitdir = s:get_gitdir()
+  let ret = ''
+  if gitdir !=# ''
+    let branch = s:get_branch(gitdir)
+    let action = s:get_action(gitdir)
+    if empty(action)
+      let format = a:0 ? a:1 : '[%b]-(%i)'
+    else
+      let format = a:0 ? a:2 : '[%b|%a]-(%i)'
+    endif
+    while !empty(format)
+      let pos = match(format, '%')
+      if pos < 0
+        let ret .= format
+        let format = ''
+      else
+        let ret .= pos > 0 ? format[: pos - 1] : ''
+        let chr = format[pos + 1]
+        if chr ==# 'b'
+          let ret .= branch
+        elseif chr ==# 'a'
+          let ret .= action
+        elseif chr ==# 'i'
+          let ret .= gitinfo#revision(7)
+        elseif chr ==# 'u'
+          let ret .= gitinfo#unstaged()
+        elseif chr ==# 'c'
+          let ret .= gitinfo#staged()
+        endif
+        let format = len(format) > 2 ? format[pos + 2 :] : ''
+      endif
+    endwhile
+  endif
+  return ret
+endfunction
+
+
 function! gitinfo#branch()
   let gitdir = s:get_gitdir()
   return !empty(gitdir) ? s:get_branch(gitdir) : ''
