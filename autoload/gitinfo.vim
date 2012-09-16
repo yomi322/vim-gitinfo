@@ -12,9 +12,10 @@ function! gitinfo#action()
   return !empty(gitdir) ? s:get_action(gitdir) : ''
 endfunction
 
-function! gitinfo#revision()
+function! gitinfo#revision(...)
   let rev = s:system('git rev-parse --quiet --verify HEAD')
-  return s:shell_error() == 0 ? split(rev, '\n')[0] : ''
+  let hash = s:shell_error() == 0 ? split(rev, '\n')[0] : ''
+  return a:0 ? hash[: a:1 - 1] : hash
 endfunction
 
 function! gitinfo#unstaged(...)
