@@ -22,6 +22,13 @@ INTRODUCTION					*gitinfo-introduction*
 |tabline| as vcs_info does in zsh. Functions to get the information are
 provided.
 
+Add %{gitinfo#format()} to the statusline or the tabline like this.
+>
+    set statusline=%<%f\ %h%m%r%{gitinfo#format()}%=%-14.(%l,%c%V%)\ %P
+<
+See |gitinfo-functions| to customize the output format.
+
+
 Requirements:
 - git (http://git-scm.com/)
 
