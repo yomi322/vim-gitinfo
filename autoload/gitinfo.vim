@@ -39,6 +39,8 @@ function! gitinfo#format(...)
           let ret .= gitinfo#unstaged()
         elseif chr ==# 'c'
           let ret .= gitinfo#staged()
+        elseif chr ==# 't'
+          let ret .= gitinfo#untracked()
         endif
         let format = len(format) > 2 ? format[pos + 2 :] : ''
       endif
