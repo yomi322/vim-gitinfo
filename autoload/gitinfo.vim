@@ -2,6 +2,9 @@ let s:save_cpo = &cpo
 set cpo&vim
 
 
+let g:gitinfo_stagedstring = get(g:, 'gitinfo_stagedstring', 'S')
+
+
 function! gitinfo#format(...)
   let gitdir = s:get_gitdir()
   let ret = ''
@@ -56,18 +59,18 @@ function! gitinfo#revision(...)
   return a:0 ? hash[: a:1 - 1] : hash
 endfunction
 
+function! gitinfo#staged(...)
+  call s:system('git diff-index --cached --quiet --ignore-submodules HEAD')
+  let exit = s:shell_error()
+  let changed = s:is_inside() ? (exit && exit != 128) : 0
+  return changed ? (a:0 ? a:1 : g:gitinfo_stagedstring) : ''
+endfunction
+
 function! gitinfo#unstaged(...)
   call s:system('git diff --no-ext-diff --ignore-submodules --quiet --exit-code')
   let exit = s:shell_error()
   let changed = s:is_inside() ? (exit != 0) : 0
   return changed ? (a:0 ? a:1 : 'U') : ''
-endfunction
-
-function! gitinfo#staged(...)
-  call s:system('git diff-index --cached --quiet --ignore-submodules HEAD')
-  let exit = s:shell_error()
-  let changed = s:is_inside() ? (exit && exit != 128) : 0
-  return changed ? (a:0 ? a:1 : 'S') : ''
 endfunction
 
 

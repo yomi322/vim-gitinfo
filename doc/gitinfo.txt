@@ -97,6 +97,12 @@ gitinfo#revision([{len}])
 	When {len}, which is a Number, is given, the return value is
 	truncated to the given number of characters.
 
+						*gitinfo#staged()*
+gitinfo#staged([{str}])
+	The result is a string of {str} if there are staged changes.
+	Otherwise an empty string is returned. When {str} is omitted,
+	|g:gitinfo_stagedstring| is used.
+
 						*gitinfo#unstaged()*
 gitinfo#unstaged([{str}])
 	The result is a string of {str}, if there are unstaged changes.
@@ -105,17 +111,14 @@ gitinfo#unstaged([{str}])
 
 	When {str} is omitted, the default value 'U' is used instead.
 
-						*gitinfo#staged()*
-gitinfo#staged([{str}])
-	The result is a string of {str}, if there are staged changes.
-	Otherwise an empty string is returned.
-
-	When {str} is omitted, the default value 'S' is used instead.
-
 
 
 ==============================================================================
 VARIABLES					*gitinfo-variables*
+
+						*g:gitinfo_stagedstring*
+g:gitinfo_stagedstring			String (default: 'S')
+	The string shown if there are staged changes.
 
 
 
