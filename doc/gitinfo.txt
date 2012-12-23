@@ -9,6 +9,7 @@ CONTENTS					*gitinfo-contents*
 
 INTRODUCTION			|gitinfo-introduction|
 FUNCTIONS			|gitinfo-functions|
+VARIABLES			|gitinfo-variables|
 ISSUES				|gitinfo-issues|
 CHANGELOG			|gitinfo-changelog|
 
@@ -110,6 +111,11 @@ gitinfo#staged([{str}])
 	Otherwise an empty string is returned.
 
 	When {str} is omitted, the default value 'S' is used instead.
+
+
+
+==============================================================================
+VARIABLES					*gitinfo-variables*
 
 
 
