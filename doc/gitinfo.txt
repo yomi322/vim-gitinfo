@@ -127,6 +127,9 @@ ISSUES						*gitinfo-issues*
 ==============================================================================
 CHANGELOG					*gitinfo-changelog*
 
+x.x.x	xxxx-xx-xx
+	  - Add global variables to set default
+
 0.0.2	2012-09-17
 	  - Change the behavior of gitinfo#unstaged() and gitinfo#staged()
 	  - Modify gitinfo#revision() to accept the argument
