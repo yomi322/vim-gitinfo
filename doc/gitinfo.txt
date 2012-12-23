@@ -40,17 +40,6 @@ https://github.com/yomi322/vim-gitinfo
 ==============================================================================
 FUNCTIONS					*gitinfo-functions*
 
-USAGE				RESULT	DESCRIPTION
-
-gitinfo#format([{fmt1}, {fmt2}])
-				String	show git info according to the format
-gitinfo#branch()		String	the branch name
-gitinfo#action()		String	the action name
-gitinfo#revision([{len}])	String	the hash of the current commit
-gitinfo#unstaged([{str}])	String	check if there are unstaged changes
-gitinfo#staged([{str}])		String	check if there are staged changes
-
-
 						*gitinfo#format()*
 gitinfo#format([{fmt1}, {fmt2}])
 	The result is the output of git information according to the given
