@@ -2,6 +2,8 @@ let s:save_cpo = &cpo
 set cpo&vim
 
 
+let g:gitinfo_format         = get(g:, 'gitinfo_format',         '[%b]-(%i)')
+let g:gitinfo_actionformat   = get(g:, 'gitinfo_actionformat',   '[%b|%a]-(%i)')
 let g:gitinfo_revisionlength = get(g:, 'gitinfo_revisionlength', 7)
 let g:gitinfo_stagedstring   = get(g:, 'gitinfo_stagedstring',   'S')
 let g:gitinfo_unstagedstring = get(g:, 'gitinfo_unstagedstring', 'U')
@@ -14,9 +16,9 @@ function! gitinfo#format(...)
     let branch = s:get_branch(gitdir)
     let action = s:get_action(gitdir)
     if empty(action)
-      let format = a:0 ? a:1 : '[%b]-(%i)'
+      let format = a:0 ? a:1 : g:gitinfo_format
     else
-      let format = a:0 ? a:2 : '[%b|%a]-(%i)'
+      let format = a:0 ? a:2 : g:gitinfo_actionformat
     endif
     while !empty(format)
       let pos = match(format, '%')
@@ -31,7 +33,7 @@ function! gitinfo#format(...)
         elseif chr ==# 'a'
           let ret .= action
         elseif chr ==# 'i'
-          let ret .= gitinfo#revision(7)
+          let ret .= gitinfo#revision()
         elseif chr ==# 'u'
           let ret .= gitinfo#unstaged()
         elseif chr ==# 'c'

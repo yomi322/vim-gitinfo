@@ -56,25 +56,10 @@ gitinfo#format([{fmt1}, {fmt2}])
 	The result is the output of git information according to the given
 	format. {fmt1} is used when there is no action (which is more often),
 	and {fmt2} when an action is going on; like an interacting rebase or
-	a merge conflict. When the arguments are omitted, the default values
-	are used instead.
-
-	If the current directory is not controlled by git, an empty string is
-	returned.
-
-	The following replacements are done in the format string. See the
-	section of each of the functions for more details.
-
-	%b	gitinfo#branch()
-	%a	gitinfo#action()
-	%i	gitinfo#revision(7)
-	%u	gitinfo#unstaged()
-	%c	gitinfo#staged()
-
-	The default values are shown below.
-
-	fmt1	'[%b]-(%i)'
-	fmt2	'[%b|%a]-(%i)'
+	a merge conflict. When the arguments are omitted, |g:gitinfo_format|
+	and |g:gitinfo_actionformat| are respectively used as {fmt1} and
+	{fmt2}. If the current directory is not controlled by git, an empty
+	string is returned.
 
 						*gitinfo#branch()*
 gitinfo#branch()
@@ -113,6 +98,20 @@ gitinfo#unstaged([{str}])
 
 ==============================================================================
 VARIABLES					*gitinfo-variables*
+
+						*g:gitinfo_format*
+						*g:gitinfo_actionformat*
+g:gitinfo_format			String (default: '[%b]-(%i)')
+g:gitinfo_actionformat			String (default: '[%b|%a]-(%i)')
+	The format string used in |gitinfo#format()|. The following
+	replacements are done in the format string. See the section of each
+	of the functions for more details.
+
+	%b	gitinfo#branch()
+	%a	gitinfo#action()
+	%i	gitinfo#revision()
+	%c	gitinfo#staged()
+	%u	gitinfo#unstaged()
 
 						*g:gitinfo_revisionlength*
 g:gitinfo_revisionlength		Number (default: 7)
