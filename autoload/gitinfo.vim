@@ -2,7 +2,8 @@ let s:save_cpo = &cpo
 set cpo&vim
 
 
-let g:gitinfo_stagedstring = get(g:, 'gitinfo_stagedstring', 'S')
+let g:gitinfo_stagedstring   = get(g:, 'gitinfo_stagedstring',   'S')
+let g:gitinfo_unstagedstring = get(g:, 'gitinfo_unstagedstring', 'U')
 
 
 function! gitinfo#format(...)
@@ -70,7 +71,7 @@ function! gitinfo#unstaged(...)
   call s:system('git diff --no-ext-diff --ignore-submodules --quiet --exit-code')
   let exit = s:shell_error()
   let changed = s:is_inside() ? (exit != 0) : 0
-  return changed ? (a:0 ? a:1 : 'U') : ''
+  return changed ? (a:0 ? a:1 : g:gitinfo_unstagedstring) : ''
 endfunction
 
 

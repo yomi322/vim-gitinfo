@@ -105,11 +105,10 @@ gitinfo#staged([{str}])
 
 						*gitinfo#unstaged()*
 gitinfo#unstaged([{str}])
-	The result is a string of {str}, if there are unstaged changes.
+	The result is a string of {str} if there are unstaged changes.
 	Otherwise an empty string is returned. Changes in untracked files
-	are ignored.
-
-	When {str} is omitted, the default value 'U' is used instead.
+	are ignored. When {str} is omitted, |g:gitinfo_unstagedstring| is
+	used.
 
 
 
@@ -119,6 +118,10 @@ VARIABLES					*gitinfo-variables*
 						*g:gitinfo_stagedstring*
 g:gitinfo_stagedstring			String (default: 'S')
 	The string shown if there are staged changes.
+
+						*g:gitinfo_unstagedstring*
+g:gitinfo_unstagedstring		String (default: 'U')
+	The string shown if there are unstaged changes.
 
 
 
