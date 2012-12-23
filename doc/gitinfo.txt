@@ -89,6 +89,14 @@ gitinfo#untracked([{str}])
 	Otherwise an empty string is returned. When {str} is omitted,
 	|g:gitinfo_untrackedstring| is used.
 
+						*gitinfo#ahead()*
+gitinfo#ahead([{fmt}])
+	The result is a formatted string which shows how many commits to be
+	pushed from master to origin/master. The string is returned if you
+	are on master branch and there are commits to be pushed to
+	origin/master. In the other cases, an empty string is returned. When
+	{fmt} is omitted, |g:gitinfo_aheadformat| is used.
+
 
 
 ==============================================================================
@@ -125,6 +133,11 @@ g:gitinfo_unstagedstring		String (default: 'U')
 						*g:gitinfo_untrackedstring*
 g:gitinfo_untrackedstring		String (default: '?')
 	The string shown if there are untracked files.
+
+						*g:gitinfo_aheadformat*
+g:gitinfo_aheadformat			String (default: 'ahead: %N')
+	The format string used in |gitinfo#ahead()|. '%N' in the string is
+	replaced to the number of commits to be pushed.
 
 
 

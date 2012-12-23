@@ -8,6 +8,7 @@ let g:gitinfo_revisionlength  = get(g:, 'gitinfo_revisionlength',  7)
 let g:gitinfo_stagedstring    = get(g:, 'gitinfo_stagedstring',    'S')
 let g:gitinfo_unstagedstring  = get(g:, 'gitinfo_unstagedstring',  'U')
 let g:gitinfo_untrackedstring = get(g:, 'gitinfo_untrackedstring', '?')
+let g:gitinfo_aheadformat     = get(g:, 'gitinfo_aheadformat',     'ahead: %N')
 
 
 function! gitinfo#format(...)
@@ -85,6 +86,18 @@ function! gitinfo#untracked(...)
   let files = s:system('git status --porcelain')
   let changed = s:shell_error() == 0 ? !empty(filter(split(files, '\n'), 'v:val =~# "^?? "')) : 0
   return changed ? (a:0 ? a:1 : g:gitinfo_untrackedstring) : ''
+endfunction
+
+function! gitinfo#ahead(...)
+  let branch = gitinfo#branch()
+  if branch !=# 'master'
+    return ''
+  else
+    let revs = s:system('git rev-list master...origin/master')
+    let ahead = s:shell_error() == 0 ? len(split(revs, '\n')) : -1
+    let fmt = a:0 ? a:1 : g:gitinfo_aheadformat
+    return ahead > 0 ? substitute(fmt, '%N', ahead, 'g') : ''
+  endif
 endfunction
 
 
