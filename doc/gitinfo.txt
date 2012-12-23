@@ -83,6 +83,12 @@ gitinfo#unstaged([{str}])
 	are ignored. When {str} is omitted, |g:gitinfo_unstagedstring| is
 	used.
 
+						*gitinfo#untracked()*
+gitinfo#untracked([{str}])
+	The result is a string of {str} if there are untracked files.
+	Otherwise an empty string is returned. When {str} is omitted,
+	|g:gitinfo_untrackedstring| is used.
+
 
 
 ==============================================================================
@@ -114,6 +120,10 @@ g:gitinfo_stagedstring			String (default: 'S')
 						*g:gitinfo_unstagedstring*
 g:gitinfo_unstagedstring		String (default: 'U')
 	The string shown if there are unstaged changes.
+
+						*g:gitinfo_untrackedstring*
+g:gitinfo_untrackedstring		String (default: '?')
+	The string shown if there are untracked files.
 
 
 

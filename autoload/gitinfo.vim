@@ -2,11 +2,12 @@ let s:save_cpo = &cpo
 set cpo&vim
 
 
-let g:gitinfo_format         = get(g:, 'gitinfo_format',         '[%b]-(%i)')
-let g:gitinfo_actionformat   = get(g:, 'gitinfo_actionformat',   '[%b|%a]-(%i)')
-let g:gitinfo_revisionlength = get(g:, 'gitinfo_revisionlength', 7)
-let g:gitinfo_stagedstring   = get(g:, 'gitinfo_stagedstring',   'S')
-let g:gitinfo_unstagedstring = get(g:, 'gitinfo_unstagedstring', 'U')
+let g:gitinfo_format          = get(g:, 'gitinfo_format',          '[%b]-(%i)')
+let g:gitinfo_actionformat    = get(g:, 'gitinfo_actionformat',    '[%b|%a]-(%i)')
+let g:gitinfo_revisionlength  = get(g:, 'gitinfo_revisionlength',  7)
+let g:gitinfo_stagedstring    = get(g:, 'gitinfo_stagedstring',    'S')
+let g:gitinfo_unstagedstring  = get(g:, 'gitinfo_unstagedstring',  'U')
+let g:gitinfo_untrackedstring = get(g:, 'gitinfo_untrackedstring', '?')
 
 
 function! gitinfo#format(...)
@@ -76,6 +77,12 @@ function! gitinfo#unstaged(...)
   let exit = s:shell_error()
   let changed = s:is_inside() ? (exit != 0) : 0
   return changed ? (a:0 ? a:1 : g:gitinfo_unstagedstring) : ''
+endfunction
+
+function! gitinfo#untracked(...)
+  let files = s:system('git status --porcelain')
+  let changed = s:shell_error() == 0 ? !empty(filter(split(files, '\n'), 'v:val =~# "^?? "')) : 0
+  return changed ? (a:0 ? a:1 : g:gitinfo_untrackedstring) : ''
 endfunction
 
 
