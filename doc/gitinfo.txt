@@ -1,6 +1,6 @@
 *gitinfo.txt*	Show git information.
 
-Version: 0.0.1
+Version: 0.0.2
 Author: yomi <yomi322@gmail.com>
 License: MIT License
 
@@ -123,7 +123,7 @@ ISSUES						*gitinfo-issues*
 ==============================================================================
 CHANGELOG					*gitinfo-changelog*
 
-x.x.x	xxxx-xx-xx
+0.0.2	2012-09-17
 	  - Change the behavior of gitinfo#unstaged() and gitinfo#staged()
 	  - Modify gitinfo#revision() to accept the argument
 	  - Add gitinfo#format()
