@@ -154,6 +154,7 @@ CHANGELOG					*gitinfo-changelog*
 
 x.x.x	xxxx-xx-xx
 	  - Add global variables to set default
+	  - Add gitinfo#untracked() and gitinfo#ahead()
 
 0.0.2	2012-09-17
 	  - Change the behavior of gitinfo#unstaged() and gitinfo#staged()
