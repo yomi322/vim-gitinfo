@@ -35,10 +35,10 @@ function! gitinfo#format(...)
           let ret .= action
         elseif chr ==# 'i'
           let ret .= gitinfo#revision()
-        elseif chr ==# 'u'
-          let ret .= gitinfo#unstaged()
         elseif chr ==# 'c'
           let ret .= gitinfo#staged()
+        elseif chr ==# 'u'
+          let ret .= gitinfo#unstaged()
         elseif chr ==# 't'
           let ret .= gitinfo#untracked()
         endif
