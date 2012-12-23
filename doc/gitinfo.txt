@@ -91,11 +91,10 @@ gitinfo#action()
 						*gitinfo#revision()*
 gitinfo#revision([{len}])
 	The result is a string describing the hash value of the currently
-	checked out commit. If the current working directory is not
-	git-controlled, an empty string is returned.
-
-	When {len}, which is a Number, is given, the return value is
-	truncated to the given number of characters.
+	checked out commit. It is truncated to the number of characters
+	specified by {len}. When {len} is ommited, |g:gitinfo_revisionlength|
+	is used. If the current working directory is not controlled by git,
+	an empty string is returned.
 
 						*gitinfo#staged()*
 gitinfo#staged([{str}])
@@ -114,6 +113,11 @@ gitinfo#unstaged([{str}])
 
 ==============================================================================
 VARIABLES					*gitinfo-variables*
+
+						*g:gitinfo_revisionlength*
+g:gitinfo_revisionlength		Number (default: 7)
+	The number which specifies the number of the characters of the hash
+	value to be shown.
 
 						*g:gitinfo_stagedstring*
 g:gitinfo_stagedstring			String (default: 'S')

@@ -2,6 +2,7 @@ let s:save_cpo = &cpo
 set cpo&vim
 
 
+let g:gitinfo_revisionlength = get(g:, 'gitinfo_revisionlength', 7)
 let g:gitinfo_stagedstring   = get(g:, 'gitinfo_stagedstring',   'S')
 let g:gitinfo_unstagedstring = get(g:, 'gitinfo_unstagedstring', 'U')
 
@@ -57,7 +58,8 @@ endfunction
 function! gitinfo#revision(...)
   let rev = s:system('git rev-parse --quiet --verify HEAD')
   let hash = s:shell_error() == 0 ? split(rev, '\n')[0] : ''
-  return a:0 ? hash[: a:1 - 1] : hash
+  let length = a:0 ? a:1 : g:gitinfo_revisionlength
+  return hash[: length - 1]
 endfunction
 
 function! gitinfo#staged(...)
