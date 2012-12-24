@@ -89,13 +89,13 @@ gitinfo#untracked([{str}])
 	Otherwise an empty string is returned. When {str} is omitted,
 	|g:gitinfo_untrackedstring| is used.
 
-						*gitinfo#ahead()*
-gitinfo#ahead([{fmt}])
-	The result is a formatted string which shows how many commits to be
-	pushed from master to origin/master. The string is returned if you
-	are on master branch and there are commits to be pushed to
-	origin/master. In the other cases, an empty string is returned. When
-	{fmt} is omitted, |g:gitinfo_aheadformat| is used.
+						*gitinfo#upstream()*
+gitinfo#upstream([{fmt1}, {fmt2}])
+	The result is a formatted string which shows the local branch is
+	ahead-of or behind remote HEAD. {fmt1} and {fmt2} are used
+	respectively. If there are not an appropriate remote branch or
+	commits, an empty string is returned. When the arguments are
+	omitted, corresponding items of |g:gitinfo_upstreamformat| are used.
 
 
 
@@ -135,10 +135,11 @@ g:gitinfo_unstagedstring		String (default: 'U')
 g:gitinfo_untrackedstring		String (default: '?')
 	The string shown if there are untracked files.
 
-						*g:gitinfo_aheadformat*
-g:gitinfo_aheadformat			String (default: 'ahead: %N')
-	The format string used in |gitinfo#ahead()|. '%N' in the string is
-	replaced to the number of commits to be pushed.
+						*g:gitinfo_upstreamformat*
+g:gitinfo_upstreamformat		Dict
+				(default: {'ahead': '+%N', 'behind': '-%N'})
+	The dictionary of the format strings used in |gitinfo#upstream()|.
+	'%N' in the value is replaced to the number of the commits.
 
 
 
@@ -154,7 +155,7 @@ CHANGELOG					*gitinfo-changelog*
 
 x.x.x	xxxx-xx-xx
 	  - Add global variables to set default
-	  - Add gitinfo#untracked() and gitinfo#ahead()
+	  - Add gitinfo#untracked() and gitinfo#upstream()
 
 0.0.2	2012-09-17
 	  - Change the behavior of gitinfo#unstaged() and gitinfo#staged()

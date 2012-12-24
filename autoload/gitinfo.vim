@@ -8,7 +8,7 @@ let g:gitinfo_revisionlength  = get(g:, 'gitinfo_revisionlength',  7)
 let g:gitinfo_stagedstring    = get(g:, 'gitinfo_stagedstring',    'S')
 let g:gitinfo_unstagedstring  = get(g:, 'gitinfo_unstagedstring',  'U')
 let g:gitinfo_untrackedstring = get(g:, 'gitinfo_untrackedstring', '?')
-let g:gitinfo_aheadformat     = get(g:, 'gitinfo_aheadformat',     'ahead: %N')
+let g:gitinfo_upstreamformat  = get(g:, 'gitinfo_upstreamformat',  { 'ahead': '+%N', 'behind': '-%N' })
 
 
 function! gitinfo#format(...)
@@ -90,16 +90,22 @@ function! gitinfo#untracked(...)
   return changed ? (a:0 ? a:1 : g:gitinfo_untrackedstring) : ''
 endfunction
 
-function! gitinfo#ahead(...)
+function! gitinfo#upstream(...)
   let branch = gitinfo#branch()
-  if branch !=# 'master'
-    return ''
-  else
-    let revs = s:system('git rev-list master...origin/master')
-    let ahead = s:shell_error() == 0 ? len(split(revs, '\n')) : -1
-    let fmt = a:0 ? a:1 : g:gitinfo_aheadformat
-    return ahead > 0 ? substitute(fmt, '%N', ahead, 'g') : ''
+  let ret = ''
+  let ahead  = s:system('git rev-list origin/' . branch . '..HEAD')
+  let iahead = s:shell_error() == 0 ? len(split(ahead, '\n')) : 0
+  if iahead > 0
+    let fmt = a:0 ? a:1 : g:gitinfo_upstreamformat.ahead
+    let ret .= substitute(fmt, '%N', iahead, 'g')
   endif
+  let behind  = s:system('git rev-list HEAD..origin/' . branch)
+  let ibehind = s:shell_error() == 0 ? len(split(behind, '\n')) : 0
+  if ibehind > 0
+    let fmt = a:0 ? a:2 : g:gitinfo_upstreamformat.behind
+    let ret .= substitute(fmt, '%N', ibehind, 'g')
+  endif
+  return ret
 endfunction
 
 
