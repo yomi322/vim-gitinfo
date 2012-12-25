@@ -14,43 +14,36 @@ let g:gitinfo_behind_format    = get(g:, 'gitinfo_behind_format', '-%N')
 
 function! gitinfo#format(...)
   let gitdir = s:get_gitdir()
-  let ret = ''
-  if gitdir !=# ''
+  if gitdir ==# ''
+    return ''
+  else
     let branch = s:get_branch(gitdir)
     let action = s:get_action(gitdir)
-    if empty(action)
-      let format = a:0 ? a:1 : g:gitinfo_format
+    if action ==# ''
+      let ret = a:0 ? a:1 : g:gitinfo_format
     else
-      let format = a:0 ? a:2 : g:gitinfo_action_format
+      let ret = a:0 ? a:2 : g:gitinfo_action_format
     endif
-    while !empty(format)
-      let pos = match(format, '%')
-      if pos < 0
-        let ret .= format
-        let format = ''
-      else
-        let ret .= pos > 0 ? format[: pos - 1] : ''
-        let chr = format[pos + 1]
-        if chr ==# 'b'
-          let ret .= branch
-        elseif chr ==# 'a'
-          let ret .= action
-        elseif chr ==# 'i'
-          let ret .= gitinfo#revision()
-        elseif chr ==# 'c'
-          let ret .= gitinfo#staged()
-        elseif chr ==# 'u'
-          let ret .= gitinfo#unstaged()
-        elseif chr ==# 't'
-          let ret .= gitinfo#untracked()
-        elseif chr ==# 'r'
-          let ret .= gitinfo#ahead()
-        elseif chr ==# 'l'
-          let ret .= gitinfo#behind()
-        endif
-        let format = len(format) > 2 ? format[pos + 2 :] : ''
-      endif
-    endwhile
+    let ret = substitute(ret, '%b', branch, 'g')
+    let ret = substitute(ret, '%a', action, 'g')
+    if match(ret, '%i') >= 0
+      let ret = substitute(ret, '%i', gitinfo#revision(), 'g')
+    endif
+    if match(ret, '%c') >= 0
+      let ret = substitute(ret, '%c', gitinfo#staged(), 'g')
+    endif
+    if match(ret, '%u') >= 0
+      let ret = substitute(ret, '%u', gitinfo#unstaged(), 'g')
+    endif
+    if match(ret, '%t') >= 0
+      let ret = substitute(ret, '%t', gitinfo#untracked(), 'g')
+    endif
+    if match(ret, '%r') >= 0
+      let ret = substitute(ret, '%r', gitinfo#ahead(), 'g')
+    endif
+    if match(ret, '%l') >= 0
+      let ret = substitute(ret, '%l', gitinfo#behind(), 'g')
+    endif
   endif
   return ret
 endfunction
