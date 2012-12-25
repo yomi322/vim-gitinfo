@@ -2,13 +2,14 @@ let s:save_cpo = &cpo
 set cpo&vim
 
 
-let g:gitinfo_format          = get(g:, 'gitinfo_format',          '[%b]-(%i)')
-let g:gitinfo_actionformat    = get(g:, 'gitinfo_actionformat',    '[%b|%a]-(%i)')
-let g:gitinfo_revisionlength  = get(g:, 'gitinfo_revisionlength',  7)
-let g:gitinfo_stagedstring    = get(g:, 'gitinfo_stagedstring',    'S')
-let g:gitinfo_unstagedstring  = get(g:, 'gitinfo_unstagedstring',  'U')
-let g:gitinfo_untrackedstring = get(g:, 'gitinfo_untrackedstring', '?')
-let g:gitinfo_upstreamformat  = get(g:, 'gitinfo_upstreamformat',  { 'ahead': '+%N', 'behind': '-%N' })
+let g:gitinfo_format           = get(g:, 'gitinfo_format', '[%b]-(%i)')
+let g:gitinfo_action_format    = get(g:, 'gitinfo_action_format', '[%b|%a]-(%i)')
+let g:gitinfo_revision_length  = get(g:, 'gitinfo_revision_length', 7)
+let g:gitinfo_staged_string    = get(g:, 'gitinfo_staged_string', 'S')
+let g:gitinfo_unstaged_string  = get(g:, 'gitinfo_unstaged_string', 'U')
+let g:gitinfo_untracked_string = get(g:, 'gitinfo_untracked_string', '?')
+let g:gitinfo_ahead_format     = get(g:, 'gitinfo_ahead_format', '+%N')
+let g:gitinfo_behind_format    = get(g:, 'gitinfo_behind_format', '-%N')
 
 
 function! gitinfo#format(...)
@@ -20,7 +21,7 @@ function! gitinfo#format(...)
     if empty(action)
       let format = a:0 ? a:1 : g:gitinfo_format
     else
-      let format = a:0 ? a:2 : g:gitinfo_actionformat
+      let format = a:0 ? a:2 : g:gitinfo_action_format
     endif
     while !empty(format)
       let pos = match(format, '%')
@@ -66,7 +67,7 @@ endfunction
 function! gitinfo#revision(...)
   let rev = s:system('git rev-parse --quiet --verify HEAD')
   let hash = s:shell_error() == 0 ? split(rev, '\n')[0] : ''
-  let length = a:0 ? a:1 : g:gitinfo_revisionlength
+  let length = a:0 ? a:1 : g:gitinfo_revision_length
   return hash[: length - 1]
 endfunction
 
@@ -74,20 +75,20 @@ function! gitinfo#staged(...)
   call s:system('git diff-index --cached --quiet --ignore-submodules HEAD')
   let exit = s:shell_error()
   let changed = s:is_inside() ? (exit && exit != 128) : 0
-  return changed ? (a:0 ? a:1 : g:gitinfo_stagedstring) : ''
+  return changed ? (a:0 ? a:1 : g:gitinfo_staged_string) : ''
 endfunction
 
 function! gitinfo#unstaged(...)
   call s:system('git diff --no-ext-diff --ignore-submodules --quiet --exit-code')
   let exit = s:shell_error()
   let changed = s:is_inside() ? (exit != 0) : 0
-  return changed ? (a:0 ? a:1 : g:gitinfo_unstagedstring) : ''
+  return changed ? (a:0 ? a:1 : g:gitinfo_unstaged_string) : ''
 endfunction
 
 function! gitinfo#untracked(...)
   let files = s:system('git status --porcelain')
   let changed = s:shell_error() == 0 ? !empty(filter(split(files, '\n'), 'v:val =~# "^?? "')) : 0
-  return changed ? (a:0 ? a:1 : g:gitinfo_untrackedstring) : ''
+  return changed ? (a:0 ? a:1 : g:gitinfo_untracked_string) : ''
 endfunction
 
 function! gitinfo#upstream(...)
@@ -96,13 +97,13 @@ function! gitinfo#upstream(...)
   let ahead  = s:system('git rev-list origin/' . branch . '..HEAD')
   let iahead = s:shell_error() == 0 ? len(split(ahead, '\n')) : 0
   if iahead > 0
-    let fmt = a:0 ? a:1 : g:gitinfo_upstreamformat.ahead
+    let fmt = a:0 ? a:1 : g:gitinfo_ahead_format
     let ret .= substitute(fmt, '%N', iahead, 'g')
   endif
   let behind  = s:system('git rev-list HEAD..origin/' . branch)
   let ibehind = s:shell_error() == 0 ? len(split(behind, '\n')) : 0
   if ibehind > 0
-    let fmt = a:0 ? a:2 : g:gitinfo_upstreamformat.behind
+    let fmt = a:0 ? a:2 : g:gitinfo_behind_format
     let ret .= substitute(fmt, '%N', ibehind, 'g')
   endif
   return ret

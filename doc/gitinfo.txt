@@ -46,7 +46,7 @@ gitinfo#format([{fmt1}, {fmt2}])
 	format. {fmt1} is used when there is no action (which is more often),
 	and {fmt2} when an action is going on; like an interacting rebase or
 	a merge conflict. When the arguments are omitted, |g:gitinfo_format|
-	and |g:gitinfo_actionformat| are respectively used as {fmt1} and
+	and |g:gitinfo_action_format| are respectively used as {fmt1} and
 	{fmt2}. If the current directory is not controlled by git, an empty
 	string is returned.
 
@@ -66,28 +66,28 @@ gitinfo#action()
 gitinfo#revision([{len}])
 	The result is a string describing the hash value of the currently
 	checked out commit. It is truncated to the number of characters
-	specified by {len}. When {len} is ommited, |g:gitinfo_revisionlength|
-	is used. If the current working directory is not controlled by git,
-	an empty string is returned.
+	specified by {len}. When {len} is ommited,
+	|g:gitinfo_revisio_nlength| is used. If the current working
+	directory is not controlled by git, an empty string is returned.
 
 						*gitinfo#staged()*
 gitinfo#staged([{str}])
 	The result is a string of {str} if there are staged changes.
 	Otherwise an empty string is returned. When {str} is omitted,
-	|g:gitinfo_stagedstring| is used.
+	|g:gitinfo_staged_string| is used.
 
 						*gitinfo#unstaged()*
 gitinfo#unstaged([{str}])
 	The result is a string of {str} if there are unstaged changes.
 	Otherwise an empty string is returned. Changes in untracked files
-	are ignored. When {str} is omitted, |g:gitinfo_unstagedstring| is
+	are ignored. When {str} is omitted, |g:gitinfo_unstaged_string| is
 	used.
 
 						*gitinfo#untracked()*
 gitinfo#untracked([{str}])
 	The result is a string of {str} if there are untracked files.
 	Otherwise an empty string is returned. When {str} is omitted,
-	|g:gitinfo_untrackedstring| is used.
+	|g:gitinfo_untracked_string| is used.
 
 						*gitinfo#upstream()*
 gitinfo#upstream([{fmt1}, {fmt2}])
@@ -95,7 +95,8 @@ gitinfo#upstream([{fmt1}, {fmt2}])
 	ahead-of or behind remote HEAD. {fmt1} and {fmt2} are used
 	respectively. If there are not an appropriate remote branch or
 	commits, an empty string is returned. When the arguments are
-	omitted, corresponding items of |g:gitinfo_upstreamformat| are used.
+	omitted, corresponding variables of |g:gitinfo_ahead_format| or
+	|g:gitinfo_behind_format| are used.
 
 
 
@@ -103,9 +104,9 @@ gitinfo#upstream([{fmt1}, {fmt2}])
 VARIABLES					*gitinfo-variables*
 
 						*g:gitinfo_format*
-						*g:gitinfo_actionformat*
+						*g:gitinfo_action_format*
 g:gitinfo_format			String (default: '[%b]-(%i)')
-g:gitinfo_actionformat			String (default: '[%b|%a]-(%i)')
+g:gitinfo_action_format			String (default: '[%b|%a]-(%i)')
 	The format string used in |gitinfo#format()|. The following
 	replacements are done in the format string. See the section of each
 	of the functions for more details.
@@ -118,26 +119,27 @@ g:gitinfo_actionformat			String (default: '[%b|%a]-(%i)')
 	%t	gitinfo#untracked()
 	%r	gitinfo#upstream()
 
-						*g:gitinfo_revisionlength*
-g:gitinfo_revisionlength		Number (default: 7)
+						*g:gitinfo_revision_length*
+g:gitinfo_revision_length		Number (default: 7)
 	The number which specifies the number of the characters of the hash
 	value to be shown.
 
-						*g:gitinfo_stagedstring*
-g:gitinfo_stagedstring			String (default: 'S')
+						*g:gitinfo_staged_string*
+g:gitinfo_staged_string			String (default: 'S')
 	The string shown if there are staged changes.
 
-						*g:gitinfo_unstagedstring*
-g:gitinfo_unstagedstring		String (default: 'U')
+						*g:gitinfo_unstaged_string*
+g:gitinfo_unstaged_string		String (default: 'U')
 	The string shown if there are unstaged changes.
 
-						*g:gitinfo_untrackedstring*
-g:gitinfo_untrackedstring		String (default: '?')
+						*g:gitinfo_untracked_string*
+g:gitinfo_untracked_string		String (default: '?')
 	The string shown if there are untracked files.
 
-						*g:gitinfo_upstreamformat*
-g:gitinfo_upstreamformat		Dict
-				(default: {'ahead': '+%N', 'behind': '-%N'})
+						*g:gitinfo_ahead_format*
+						*g:gitinfo_behind_format*
+g:gitinfo_ahead_format			String (default: '+%N')
+g:gitinfo_behind_format			String (default: '-%N')
 	The dictionary of the format strings used in |gitinfo#upstream()|.
 	'%N' in the value is replaced to the number of the commits.
 
