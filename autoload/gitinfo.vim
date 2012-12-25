@@ -91,22 +91,28 @@ function! gitinfo#untracked(...)
   return changed ? (a:0 ? a:1 : g:gitinfo_untracked_string) : ''
 endfunction
 
-function! gitinfo#upstream(...)
+function! gitinfo#ahead(...)
   let branch = gitinfo#branch()
-  let ret = ''
-  let ahead  = s:system('git rev-list origin/' . branch . '..HEAD')
-  let iahead = s:shell_error() == 0 ? len(split(ahead, '\n')) : 0
-  if iahead > 0
+  let rev    = s:system('git rev-list origin/' . branch . '..HEAD')
+  let ahead  = s:shell_error() == 0 ? len(split(rev, '\n')) : 0
+  if ahead > 0
     let fmt = a:0 ? a:1 : g:gitinfo_ahead_format
-    let ret .= substitute(fmt, '%N', iahead, 'g')
+    return substitute(fmt, '%N', ahead, 'g')
+  else
+    return ''
   endif
-  let behind  = s:system('git rev-list HEAD..origin/' . branch)
-  let ibehind = s:shell_error() == 0 ? len(split(behind, '\n')) : 0
-  if ibehind > 0
-    let fmt = a:0 ? a:2 : g:gitinfo_behind_format
-    let ret .= substitute(fmt, '%N', ibehind, 'g')
+endfunction
+
+function! gitinfo#behind(...)
+  let branch = gitinfo#branch()
+  let rev    = s:system('git rev-list HEAD..origin/' . branch)
+  let behind = s:shell_error() == 0 ? len(split(rev, '\n')) : 0
+  if behind > 0
+    let fmt = a:0 ? a:1 : g:gitinfo_behind_format
+    return substitute(fmt, '%N', behind, 'g')
+  else
+    return ''
   endif
-  return ret
 endfunction
 
 

@@ -89,14 +89,19 @@ gitinfo#untracked([{str}])
 	Otherwise an empty string is returned. When {str} is omitted,
 	|g:gitinfo_untracked_string| is used.
 
-						*gitinfo#upstream()*
-gitinfo#upstream([{fmt1}, {fmt2}])
-	The result is a formatted string which shows the local branch is
-	ahead-of or behind remote HEAD. {fmt1} and {fmt2} are used
-	respectively. If there are not an appropriate remote branch or
-	commits, an empty string is returned. When the arguments are
-	omitted, corresponding variables of |g:gitinfo_ahead_format| or
-	|g:gitinfo_behind_format| are used.
+						*gitinfo#ahead()*
+gitinfo#ahead([{fmt}])
+	The result is a formatted string according to {fmt} which shows the
+	local branch is ahead-of remote HEAD. If there are not an
+	appropriate remote branch or commits, an empty string is returned.
+	When {fmt} is omitted, |g:gitinfo_ahead_format| is used.
+
+						*gitinfo#behind()*
+gitinfo#behind([{fmt}])
+	The result is a formatted string according to {fmt} which shows the
+	local branch is behind remote HEAD. If there are not an
+	appropriate remote branch or commits, an empty string is returned.
+	When {fmt} is omitted, |g:gitinfo_behind_format| is used.
 
 
 
@@ -140,8 +145,9 @@ g:gitinfo_untracked_string		String (default: '?')
 						*g:gitinfo_behind_format*
 g:gitinfo_ahead_format			String (default: '+%N')
 g:gitinfo_behind_format			String (default: '-%N')
-	The dictionary of the format strings used in |gitinfo#upstream()|.
-	'%N' in the value is replaced to the number of the commits.
+	The format strings used in |gitinfo#ahead()| and |gitinfo#behind()|,
+	respectively. '%N' in the format is replaced to the number of the
+	appropriate commits.
 
 
 
