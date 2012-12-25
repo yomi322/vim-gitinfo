@@ -49,6 +49,9 @@ function! gitinfo#format(...)
     if match(ret, '%m') >= 0
       let ret = substitute(ret, '%m', gitinfo#unmerged(), 'g')
     endif
+    if match(ret, '%s') >= 0
+      let ret = substitute(ret, '%s', gitinfo#stash(), 'g')
+    endif
   endif
   return ret
 endfunction
