@@ -11,6 +11,7 @@ let g:gitinfo_untracked_string = get(g:, 'gitinfo_untracked_string', '?')
 let g:gitinfo_ahead_format     = get(g:, 'gitinfo_ahead_format', '+%N')
 let g:gitinfo_behind_format    = get(g:, 'gitinfo_behind_format', '-%N')
 let g:gitinfo_unmerged_format  = get(g:, 'gitinfo_unmerged_format', 'm%N')
+let g:gitinfo_unrebased_format = get(g:, 'gitinfo_unrebased_format', 'r%N')
 let g:gitinfo_stash_format     = get(g:, 'gitinfo_stash_format', 's%N')
 
 
@@ -128,6 +129,22 @@ function! gitinfo#unmerged(...)
     if unmerged > 0
       let fmt = a:0 ? a:1 : g:gitinfo_unmerged_format
       return substitute(fmt, '%N', unmerged, 'g')
+    else
+      return ''
+    endif
+  endif
+endfunction
+
+function! gitinfo#unrebased(...)
+  let branch = gitinfo#branch()
+  if branch ==# 'master'
+    return ''
+  else
+    let rev = s:system('git rev-list ' . branch . '..master')
+    let unrebased = s:shell_error() == 0 ? len(split(rev, '\n')) : 0
+    if unrebased > 0
+      let fmt = a:0 ? a:1 : g:gitinfo_unrebased_format
+      return substitute(fmt, '%N', unrebased, 'g')
     else
       return ''
     endif
