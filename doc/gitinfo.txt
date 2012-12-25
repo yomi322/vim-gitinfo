@@ -110,6 +110,12 @@ gitinfo#unmerged([{fmt}])
 	appropriate commits, an empty string is returned. When {fmt} is
 	omitted, |g:gitinfo_unmerged_format| is used.
 
+						*gitinfo#stash()*
+gitinfo#stash([{fmt}])
+	The result is a formatted string according to {fmt} which shows the
+	number of the stashes. If there is no stash, an empty string is
+	returned. When {fmt} is omitted, |g:gitinfo_stash_format| is used.
+
 
 
 ==============================================================================
@@ -162,6 +168,11 @@ g:gitinfo_behind_format			String (default: '-%N')
 g:gitinfo_unmerged_format		String (default: 'm%N')
 	The format string used in |gitinfo#unmerged()|. '%N' in the format
 	is replaced to the number of the appropriate commits.
+
+						*g:gitinfo_stash_format*
+g:gitinfo_stash_format			String (default: 's%N')
+	The format string used in |gitinfo#stash()|. '%N' in the format
+	is replaced to the number of the stashes.
 
 
 

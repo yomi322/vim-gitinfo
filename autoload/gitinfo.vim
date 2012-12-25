@@ -11,6 +11,7 @@ let g:gitinfo_untracked_string = get(g:, 'gitinfo_untracked_string', '?')
 let g:gitinfo_ahead_format     = get(g:, 'gitinfo_ahead_format', '+%N')
 let g:gitinfo_behind_format    = get(g:, 'gitinfo_behind_format', '-%N')
 let g:gitinfo_unmerged_format  = get(g:, 'gitinfo_unmerged_format', 'm%N')
+let g:gitinfo_stash_format     = get(g:, 'gitinfo_stash_format', 's%N')
 
 
 function! gitinfo#format(...)
@@ -127,6 +128,17 @@ function! gitinfo#unmerged(...)
     else
       return ''
     endif
+  endif
+endfunction
+
+function! gitinfo#stash(...)
+  let list = s:system('git stash list')
+  let stash = s:shell_error() == 0 ? len(split(list, '\n')) : 0
+  if stash > 0
+    let fmt = a:0 ? a:1 : g:gitinfo_stash_format
+    return substitute(fmt, '%N', stash, 'g')
+  else
+    return ''
   endif
 endfunction
 
