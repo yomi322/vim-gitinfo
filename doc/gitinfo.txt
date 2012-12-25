@@ -122,7 +122,8 @@ g:gitinfo_action_format			String (default: '[%b|%a]-(%i)')
 	%c	gitinfo#staged()
 	%u	gitinfo#unstaged()
 	%t	gitinfo#untracked()
-	%r	gitinfo#upstream()
+	%r	gitinfo#ahead()
+	%l	gitinfo#behind()
 
 						*g:gitinfo_revision_length*
 g:gitinfo_revision_length		Number (default: 7)

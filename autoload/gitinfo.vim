@@ -44,7 +44,9 @@ function! gitinfo#format(...)
         elseif chr ==# 't'
           let ret .= gitinfo#untracked()
         elseif chr ==# 'r'
-          let ret .= gitinfo#upstream()
+          let ret .= gitinfo#ahead()
+        elseif chr ==# 'l'
+          let ret .= gitinfo#behind()
         endif
         let format = len(format) > 2 ? format[pos + 2 :] : ''
       endif
