@@ -50,6 +50,9 @@ function! gitinfo#format(...)
     if match(ret, '%m') >= 0
       let ret = substitute(ret, '%m', gitinfo#unmerged(), 'g')
     endif
+    if match(ret, '%f') >= 0
+      let ret = substitute(ret, '%f', gitinfo#unrebased(), 'g')
+    endif
     if match(ret, '%s') >= 0
       let ret = substitute(ret, '%s', gitinfo#stash(), 'g')
     endif

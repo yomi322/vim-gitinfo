@@ -145,6 +145,7 @@ g:gitinfo_action_format			String (default: '[%b|%a]-(%i)')
 	%r	gitinfo#ahead()
 	%l	gitinfo#behind()
 	%m	gitinfo#unmerged()
+	%f	gitinfo#unrebased()
 	%s	gitinfo#stash()
 
 						*g:gitinfo_revision_length*
