@@ -103,6 +103,13 @@ gitinfo#behind([{fmt}])
 	appropriate remote branch or commits, an empty string is returned.
 	When {fmt} is omitted, |g:gitinfo_behind_format| is used.
 
+						*gitinfo#unmerged()*
+gitinfo#unmerged([{fmt}])
+	The result is a formatted string according to {fmt} which shows the
+	current branch is ahead-of master branch. If there are not
+	appropriate commits, an empty string is returned. When {fmt} is
+	omitted, |g:gitinfo_unmerged_format| is used.
+
 
 
 ==============================================================================
@@ -149,6 +156,11 @@ g:gitinfo_behind_format			String (default: '-%N')
 	The format strings used in |gitinfo#ahead()| and |gitinfo#behind()|,
 	respectively. '%N' in the format is replaced to the number of the
 	appropriate commits.
+
+						*g:gitinfo_unmerged_format*
+g:gitinfo_unmerged_format		String (default: 'm%N')
+	The format string used in |gitinfo#unmerged()|. '%N' in the format
+	is replaced to the number of the appropriate commits.
 
 
 
