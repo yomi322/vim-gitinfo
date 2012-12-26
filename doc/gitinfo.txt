@@ -130,8 +130,8 @@ VARIABLES					*gitinfo-variables*
 
 						*g:gitinfo_format*
 						*g:gitinfo_action_format*
-g:gitinfo_format			String (default: '[%b]-(%i)')
-g:gitinfo_action_format			String (default: '[%b|%a]-(%i)')
+g:gitinfo_format			String (default: '[%b]')
+g:gitinfo_action_format			String (default: '[%b|%a]')
 	The format string used in |gitinfo#format()|. The following
 	replacements are done in the format string. See the section of each
 	of the functions for more details.

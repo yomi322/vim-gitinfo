@@ -2,8 +2,8 @@ let s:save_cpo = &cpo
 set cpo&vim
 
 
-let g:gitinfo_format           = get(g:, 'gitinfo_format', '[%b]-(%i)')
-let g:gitinfo_action_format    = get(g:, 'gitinfo_action_format', '[%b|%a]-(%i)')
+let g:gitinfo_format           = get(g:, 'gitinfo_format', '[%b]')
+let g:gitinfo_action_format    = get(g:, 'gitinfo_action_format', '[%b|%a]')
 let g:gitinfo_revision_length  = get(g:, 'gitinfo_revision_length', 7)
 let g:gitinfo_staged_string    = get(g:, 'gitinfo_staged_string', 'S')
 let g:gitinfo_unstaged_string  = get(g:, 'gitinfo_unstaged_string', 'U')
