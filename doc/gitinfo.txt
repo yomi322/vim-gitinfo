@@ -90,32 +90,24 @@ gitinfo#untracked([{str}])
 	|g:gitinfo_untracked_string| is used.
 
 						*gitinfo#ahead()*
-gitinfo#ahead([{fmt}])
-	The result is a formatted string according to {fmt} which shows the
-	local branch is ahead-of remote HEAD. If there are not an
-	appropriate remote branch or commits, an empty string is returned.
-	When {fmt} is omitted, |g:gitinfo_ahead_format| is used.
-
 						*gitinfo#behind()*
+gitinfo#ahead([{fmt}])
 gitinfo#behind([{fmt}])
 	The result is a formatted string according to {fmt} which shows the
-	local branch is behind remote HEAD. If there are not an
+	local branch is ahead-of or behind remote HEAD. If there are not an
 	appropriate remote branch or commits, an empty string is returned.
-	When {fmt} is omitted, |g:gitinfo_behind_format| is used.
+	When {fmt} is omitted, |g:gitinfo_ahead_format| and
+	|g:gitinfo_behind_format|are used respectively.
 
 						*gitinfo#unmerged()*
-gitinfo#unmerged([{fmt}])
-	The result is a formatted string according to {fmt} which shows the
-	current branch is ahead-of master branch. If there are not
-	appropriate commits, an empty string is returned. When {fmt} is
-	omitted, |g:gitinfo_unmerged_format| is used.
-
 						*gitinfo#unrebased()*
+gitinfo#unmerged([{fmt}])
 gitinfo#unrebased([{fmt}])
 	The result is a formatted string according to {fmt} which shows the
-	current branch is behind master branch. If there are not
-	appropriate commits, an empty string is returned. When {fmt} is
-	omitted, |g:gitinfo_unrebased_format| is used.
+	current branch is ahead-of or behind local master branch. If there
+	are not appropriate commits, an empty string is returned. When {fmt}
+	is omitted, |g:gitinfo_unmerged_format| and
+	|g:gitinfo_unrebased_format| is used respectively.
 
 						*gitinfo#stash()*
 gitinfo#stash([{fmt}])
