@@ -29,33 +29,21 @@ function! gitinfo#format(...)
     endif
     let ret = substitute(ret, '%b', branch, 'g')
     let ret = substitute(ret, '%a', action, 'g')
-    if match(ret, '%i') >= 0
-      let ret = substitute(ret, '%i', gitinfo#revision(), 'g')
-    endif
-    if match(ret, '%c') >= 0
-      let ret = substitute(ret, '%c', gitinfo#staged(), 'g')
-    endif
-    if match(ret, '%u') >= 0
-      let ret = substitute(ret, '%u', gitinfo#unstaged(), 'g')
-    endif
-    if match(ret, '%t') >= 0
-      let ret = substitute(ret, '%t', gitinfo#untracked(), 'g')
-    endif
-    if match(ret, '%r') >= 0
-      let ret = substitute(ret, '%r', gitinfo#ahead(), 'g')
-    endif
-    if match(ret, '%l') >= 0
-      let ret = substitute(ret, '%l', gitinfo#behind(), 'g')
-    endif
-    if match(ret, '%m') >= 0
-      let ret = substitute(ret, '%m', gitinfo#unmerged(), 'g')
-    endif
-    if match(ret, '%f') >= 0
-      let ret = substitute(ret, '%f', gitinfo#unrebased(), 'g')
-    endif
-    if match(ret, '%s') >= 0
-      let ret = substitute(ret, '%s', gitinfo#stash(), 'g')
-    endif
+    for [ch, func] in items(
+    \   { '%i': 'gitinfo#revision()',
+    \     '%c': 'gitinfo#staged()',
+    \     '%u': 'gitinfo#unstaged()',
+    \     '%t': 'gitinfo#untracked()',
+    \     '%r': 'gitinfo#ahead()',
+    \     '%l': 'gitinfo#behind()',
+    \     '%m': 'gitinfo#unmerged()',
+    \     '%f': 'gitinfo#unrebased()',
+    \     '%s': 'gitinfo#stash()',
+    \   })
+      if match(ret, ch) >= 0
+        let ret = substitute(ret, ch, eval(func), 'g')
+      endif
+    endfor
   endif
   return ret
 endfunction
